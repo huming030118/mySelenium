@@ -1,11 +1,17 @@
 package com.ken.monitor.item;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,7 +21,7 @@ public class ItemMonitor {
 
 	private static final Logger logger = LogManager.getLogger(ItemMonitor.class);
 	
-	HtmlUnitDriver driver;
+	WebDriver driver;
 	
 	
 	public static void main(String[] args){
@@ -26,7 +32,7 @@ public class ItemMonitor {
 	public void doWork() {
 		initDriver();
 		
-		String paimaiId = "101202961";
+		String paimaiId = "101227841";
 		
 		if(StringUtils.isEmpty(paimaiId)){
 			logger.error("can not be get paimaiId...");
@@ -68,15 +74,13 @@ public class ItemMonitor {
 	
 	
 	public void initDriver(){
-		
-//		BrowserVersion.FIREFOX_24.setHtmlAcceptHeader("text/html,application/x-javascript,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-//		BrowserVersion.FIREFOX_24.setImgAcceptHeader("image/webp,image/*,*/*;q=0.8");
-//		BrowserVersion.FIREFOX_24.setCssAcceptHeader("text/css,*/*;q=0.1");
-//		BrowserVersion.FIREFOX_24.setScriptAcceptHeader("*/*");
-		
-		
-		driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_24);
-		driver.setJavascriptEnabled(true);
+		System.setProperty("webdriver.chrome.driver","C:\\chromedriver.exe");
+		ChromeOptions options = new ChromeOptions();
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability("chrome.switches",Arrays.asList("--start-maximized"));
+		options.addArguments("--test-type", "--start-maximized");
+		options.addArguments("--test-type", "--ignore-certificate-errors");
+		driver = new ChromeDriver(options);
 		driver.manage().deleteAllCookies();
 		
 	}
@@ -226,9 +230,9 @@ public class ItemMonitor {
 			Thread.sleep(3000);
 			
 			//获取最后一次保证金记录
-			WebElement paimaiLink =driver.findElement(By.xpath("//*[@id=\"container\"]/div[3]/table/tbody/tr[1]/td[1]/a"));
+			WebElement paimaiLink =driver.findElement(By.xpath("//*[@id='container']/div[3]/table/tbody/tr[1]/td[2]"));
 			logger.info(paimaiLink);
-			return paimaiLink.toString();
+			return paimaiLink.getText();
 			
 		} catch (Exception e) {
 			logger.error("fail to ensure submit.currentUrl : "+driver.getCurrentUrl(),e);
