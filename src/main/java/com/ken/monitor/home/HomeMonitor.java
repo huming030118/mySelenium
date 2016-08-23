@@ -18,6 +18,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
+
+/**
+ * https://github.com/huming030118/mySelenium.git
+ * @author huming1
+ *
+ */
 public class HomeMonitor {
 
 	private static final Logger logger = LogManager.getLogger(HomeMonitor.class);
