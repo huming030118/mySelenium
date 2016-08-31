@@ -1,4 +1,4 @@
-package com.ken.monitor.item;
+package com.ken.monitor.ensure;
 
 import java.util.Arrays;
 
@@ -17,22 +17,22 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 
-public class ItemMonitor {
+public class EnsureSubmitMonitor {
 
-	private static final Logger logger = LogManager.getLogger(ItemMonitor.class);
+	private static final Logger logger = LogManager.getLogger(EnsureSubmitMonitor.class);
 	
 	WebDriver driver;
 	
 	
 	public static void main(String[] args){
-		ItemMonitor i = new ItemMonitor();
+		EnsureSubmitMonitor i = new EnsureSubmitMonitor();
 		i.doWork();
 	}
 
 	public void doWork() {
 		initDriver();
 		
-		String paimaiId = "101227841";
+		String paimaiId = "101282932";
 		
 		if(StringUtils.isEmpty(paimaiId)){
 			logger.error("can not be get paimaiId...");
@@ -95,8 +95,9 @@ public class ItemMonitor {
 				Thread.sleep(3000);
 				//WebElement ensureSubmit = (new WebDriverWait(driver,60)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"content\"]/div/div[2]/div[1]/div/div[2]/div[5]/div[3]/a")));
 				//点击提交保证金
-				WebElement ensureSubmit = (new WebDriverWait(driver,60)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"pm-operation-ensure-n\"]/div[4]/a")));
+//				WebElement ensureSubmit = (new WebDriverWait(driver,60)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"pm-operation-ensure-n\"]/div[4]/a")));
 //				WebElement ensureSubmit =driver.findElement(By.xpath("//*[@id=\"pm-operation-ensure-n\"]/div[4]/a"));
+				WebElement ensureSubmit = (new WebDriverWait(driver,60)).until(ExpectedConditions.visibilityOfElementLocated(By.id("submitEnsure1")));
 //				WebElement ensureSubmit =driver.findElement(By.id("submitEnsure"));//未开始，submitEnsure 已开始
 				ensureSubmit.click();
 				logger.info("click submitEnsure button on item page.");
